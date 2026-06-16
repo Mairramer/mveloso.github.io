@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mairramer ~ Mobile Engineer</title>
+  <meta name="description" content="Portfolio of Mairramer, Mobile Engineer.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #131a2a;
+      --surface-hover: #1a233a;
+      --accent: #00f2fe;
+      --accent2: #4facfe;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem;
+      background: radial-gradient(circle at 50% -20%, #1a233a 0%, #0b0f19 70%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      padding: 3rem 0;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      box-shadow: 0 0 40px rgba(0, 242, 254, 0.3);
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--surface);
+      display: none; /* Shown via JS */
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--text), var(--muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--accent);
+      background: rgba(0, 242, 254, 0.1);
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+
+    .hero .bio {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* --- Section Styles --- */
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* --- Skills --- */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .skill-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.1);
+    }
+
+    /* --- Projects Grid --- */
+    .repos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .repo-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text);
+      height: 100%;
+    }
+
+    .repo-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent2);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 242, 254, 0.08);
+    }
+
+    .repo-name {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .repo-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.5;
+      flex-grow: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .repo-stats {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+    }
+
+    .repo-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .lang-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    /* --- Social Links --- */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: var(--muted);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 0 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      section { padding: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    
+    <header class="hero">
+      <div class="avatar-wrapper">
+        <img id="gh-avatar" class="avatar" src="" alt="Mairramer">
+      </div>
+      <h1>Hi, I'm <span id="gh-name">Mairramer</span> 👋</h1>
+      <div class="role">&lt; Mobile Engineer at Sólides /&gt;</div>
+      <p class="bio">
+        I’m currently working with Flutter and Dart, but I also have knowledge in Java, Kotlin, Swift, and JavaScript/TypeScript. In the backend, I also work with Spring Boot. I’m always looking to collaborate on open source projects!
+      </p>
+      
+      <div class="social-links">
+        <a href="https://github.com/Mairramer" target="_blank" aria-label="GitHub">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/mveloso" target="_blank" aria-label="LinkedIn">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">Skills & Technologies</h2>
+      <div class="skills-grid">
+        <div class="skill-tag">🎯 Dart</div>
+        <div class="skill-tag">🩵 Flutter</div>
+        <div class="skill-tag">☕ Java</div>
+        <div class="skill-tag">🍃 Spring Boot</div>
+        <div class="skill-tag">📱 Kotlin</div>
+        <div class="skill-tag">🍎 Swift</div>
+        <div class="skill-tag">📜 JavaScript / TypeScript</div>
+        <div class="skill-tag">🔥 Firebase</div>
+        <div class="skill-tag">☁️ Azure</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Open Source Contributions</h2>
+      <div class="repos-grid">
+        <a href="https://github.com/flutter/flutter" target="_blank" class="repo-card">
+          <div class="repo-name">flutter / flutter</div>
+          <div class="repo-desc">Flutter makes it easy and fast to build beautiful apps for mobile and beyond.</div>
+          <div class="repo-stats">
+            <span><div class="lang-dot" style="background-color: #00B4AB"></div> Dart</span>
+          </div>
+        </a>
+
+        <a href="https://github.com/flutter/packages" target="_blank" class="repo-card">
+          <div class="repo-name">flutter / packages</div>
+          <div class="repo-desc">A collection of useful packages maintained by the Flutter team.</div>
+          <div class="repo-stats">
+            <span><div class="lang-dot" style="background-color: #00B4AB"></div> Dart</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">My Recent Projects</h2>
+      <div id="repos-container" class="repos-grid">
+        <div style="color: var(--muted); font-style: italic;">Fetching GitHub repositories...</div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Designed and built as a Portfolio ✨ Auto-synced with GitHub</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const GITHUB_USERNAME = 'Mairramer';
+
+    const langColors = {
+      'Dart': '#00B4AB',
+      'Flutter': '#02569B',
+      'JavaScript': '#f1e05a',
+      'TypeScript': '#3178c6',
+      'HTML': '#e34c26',
+      'CSS': '#563d7c',
+      'Java': '#b07219',
+      'Kotlin': '#A97BFF',
+      'Swift': '#F05138'
+    };
+
+    function getLangColor(lang) {
+      return langColors[lang] || '#00f2fe';
+    }
+
+    async function fetchGitHubProfile() {
+      try {
+        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+        const user = await response.json();
+
+        if (user.name) {
+          document.getElementById('gh-name').innerText = user.name;
+        }
+        
+        if (user.avatar_url) {
+          const avatar = document.getElementById('gh-avatar');
+          avatar.src = user.avatar_url;
+          avatar.style.display = 'block';
+        }
+
+      } catch (error) {
+        console.error('Error fetching GitHub profile:', error);
+      }
+    }
+
+    async function fetchGitHubRepos() {
+      try {
+        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=4`);
+        const repos = await response.json();
+
+        const container = document.getElementById('repos-container');
+        container.innerHTML = '';
+
+        if (repos.length === 0) {
+          container.innerHTML = '<div style="color: var(--muted);">No public repositories found.</div>';
+          return;
+        }
+
+        repos.forEach(repo => {
+          if(repo.fork) return;
+
+          const card = document.createElement('a');
+          card.href = repo.html_url;
+          card.target = "_blank";
+          card.className = "repo-card";
+
+          const desc = repo.description || 'No description available.';
+          const lang = repo.language || 'Code';
+          const stars = repo.stargazers_count;
+
+          card.innerHTML = `
+            <div class="repo-name">
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 4px"><path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path></svg>
+              ${repo.name}
+            </div>
+            <div class="repo-desc">${desc}</div>
+            <div class="repo-stats">
+              <span><div class="lang-dot" style="background-color: ${getLangColor(lang)}"></div> ${lang}</span>
+              ${stars > 0 ? `<span><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path></svg> ${stars}</span>` : ''}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (error) {
+        console.error('Error fetching repositories:', error);
+        document.getElementById('repos-container').innerHTML = '<div style="color: #ff4c4c;">Failed to load GitHub repositories.</div>';
+      }
+    }
+
+    fetchGitHubProfile();
+    fetchGitHubRepos();
+  </script>
+</body>
+
+</html>
